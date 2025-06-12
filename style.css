@@ -41,6 +41,7 @@ button {
   flex: 1;
   overflow-y: auto;
   margin-top: 10px;
+  margin-bottom: 70px; /* fixed footer-এর নিচে overlap না করে */
 }
 .message {
   background: white;
@@ -57,10 +58,15 @@ button {
   bottom: 5px;
   right: 10px;
 }
-footer {
+  footer {
   display: flex;
   padding: 10px;
   background: white;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
 }
 #textInput {
   flex: 1;
