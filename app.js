@@ -233,7 +233,10 @@ function closeModal() {
 }
 function confirmDelete(option) {
   if (option === 'everyone' && deleteSnapshot) {
-    deleteSnapshot.ref.remove(); // ✅ ঠিক করা হয়েছে
+    deleteSnapshot.ref.remove().then(() => {
+      // ✅ UI থেকেও সরাও
+      if (messageToDelete) messageToDelete.remove();
+    });
   } else if (option === 'me' && messageToDelete) {
     messageToDelete.remove();
   }
