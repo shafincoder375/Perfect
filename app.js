@@ -314,10 +314,10 @@ function startInCall(selfId, peerId) {
 }
 
 function hangUp() {
+  console.log("Hang up clicked");
   peerConnection?.close();
   resetCallUI();
   db.ref('calls/' + currentUser.phone).remove();
-                          
   db.ref('calls/').off();
 }
 
