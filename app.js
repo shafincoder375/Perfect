@@ -68,13 +68,30 @@ function loadFriendList() {
       const friendPhone = child.key;
       const friendName = child.val().name;
 
+      // UI এ entry তৈরি
       const div = document.createElement("div");
-      div.textContent = `${friendName} (${friendPhone})`;
       div.className = "friend-entry";
+
+      // Name + phone
+      div.innerHTML = `${friendName} (${friendPhone})`;
+
+      // Status dot
+      const dot = document.createElement("span");
+      dot.className = "status-dot";
+      div.appendChild(dot);
+
+      // Friend এর status path
+      db.ref('status/' + friendPhone).on('value', statusSnap => {
+        const isOnline = statusSnap.val()?.online;
+        dot.classList.toggle('online', isOnline);
+      });
+
+      // Click করলে chat load
       div.onclick = function () {
         chatId = [currentUser.phone, friendPhone].sort().join('_');
         loadChat();
       };
+
       friendListDiv.appendChild(div);
     });
 
@@ -82,7 +99,7 @@ function loadFriendList() {
       friendListDiv.innerHTML += "কোন বন্ধু নেই।";
     }
   });
-}
+    }
 
 function showChatArea() {
   document.querySelector("footer").style.display = "flex";
