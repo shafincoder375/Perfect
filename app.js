@@ -301,16 +301,17 @@ async function answerCall(callerId, userId) {
   document.getElementById('receiver-ui').style.display = 'none';
   localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
   peerConnection = new RTCPeerConnection(servers);
-  const callerCandidatesRef = db.ref('calls/' + userId + '/callerCandidates');
+  // (১) নিজের ICE candidate পাঠানো → এখানে path হবে caller এর কল-এর “calleeCandidates”
+  const calleeCandidatesRef = db.ref('calls/' + callerId + '/calleeCandidates');
   peerConnection.onicecandidate = event => {
     if (event.candidate) {
-      callerCandidatesRef.push(event.candidate.toJSON());
+      calleeCandidatesRef.push(event.candidate.toJSON());
     }
   };
 
-  // 🔹 **দূরবর্তী ICE candidate গ্রহণ**  
-  const calleeCandidatesRef = db.ref('calls/' + userId + '/calleeCandidates');
-  calleeCandidatesRef.on('child_added', snap => {
+  // (২) caller এর পাঠানো ICE candidate শোনা → path হবে callerCandidates
+  const callerCandidatesRef = db.ref('calls/' + callerId + '/callerCandidates');
+  callerCandidatesRef.on('child_added', snap => {
     const candidate = new RTCIceCandidate(snap.val());
     peerConnection.addIceCandidate(candidate);
   });
