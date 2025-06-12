@@ -316,6 +316,8 @@ function startInCall(selfId, peerId) {
 function hangUp() {
   peerConnection?.close();
   resetCallUI();
+  db.ref('calls/' + currentUser.phone).remove();
+                          
   db.ref('calls/').off();
 }
 
