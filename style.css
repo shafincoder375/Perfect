@@ -108,3 +108,13 @@ button {
 #deleteModal button:last-child {
   background: gray;
 }
+.status-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-left: 5px;
+  vertical-align: middle;
+  background: gray; /* ডিফল্ট – অফলাইন */
+}
+.status-dot.online { background: green; }
