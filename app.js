@@ -94,10 +94,11 @@ function loadFriendList() {
 
       // Friend এর status path
       db.ref('status/' + friendPhone).on('value', statusSnap => {
-        const isOnline = statusSnap.val()?.online;
-        dot.classList.toggle('online', isOnline);
-      });
-
+  // যদি কোন ভ্যালু না থাকে বা online===false
+  const isOnline = statusSnap.val()?.online === true;
+  dot.classList.toggle('online', isOnline);
+  // যদি online:false বা ভ্যালু না থাকে, অনলাইন ক্লাস রিমুভ থাকবে
+});
       // Click করলে chat load
       div.onclick = function () {
         chatId = [currentUser.phone, friendPhone].sort().join('_');
