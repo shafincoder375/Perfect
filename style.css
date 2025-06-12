@@ -19,6 +19,9 @@ header {
   flex-direction: column;
   padding: 1rem;
 }
+#chatPage {
+  padding-bottom: 60px; /* ফুটারের জন্য জায়গা রাখে */
+}
 .active {
   display: flex;
 }
