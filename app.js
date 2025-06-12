@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sender: currentUser.name,
     isImage: true
   });
+      e.target.value = '';
 });
 });
 // ──────────────────────────────────────────────────────────────
