@@ -21,6 +21,8 @@
     <div class="top-btns">
       <button onclick="toggleFriendForm()">➕</button>
     </div>
+     <button id="start-audio-call" title="Audio Call">📞</button>
+  </div>
     <div id="friendForm" style="display:none;">
       <input id="friendName" type="text" placeholder="বন্ধুর নাম" />
       <input id="friendPhone" type="text" placeholder="বন্ধুর ফোন নাম্বার" />
@@ -42,7 +44,26 @@
     <button onclick="confirmDelete('me')">শুধু আমার থেকে</button>
     <button onclick="closeModal()">❌ বাতিল</button>
   </div>
+<!-- Caller UI -->
+<div id="caller-ui" style="display:none; flex-direction:column; align-items:center; gap:10px;">
+  <p>Calling <span id="friend-name"></span>…</p>
+  <button id="hangup-call">Hang Up</button>
+</div>
 
+<!-- Receiver UI -->
+<div id="receiver-ui" style="display:none; flex-direction:column; align-items:center; gap:10px;">
+  <p>Incoming call from <span id="caller-name"></span></p>
+  <button id="answer-call">Pick Up</button>
+  <button id="reject-call">Reject</button>
+</div>
+
+<!-- In-Call UI -->
+<div id="in-call-ui" style="display:none; flex-direction:column; align-items:center; gap:10px;">
+  <p>In Call with <span id="peer-name"></span></p>
+  <audio id="remoteAudio" autoplay></audio>
+  <button id="toggle-speaker">🔊 Speaker</button>
+  <button id="hangup-incall">Hang Up</button>
+  </div>
   <script src="app.js"></script>
 </body>
 </html>
