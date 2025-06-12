@@ -110,11 +110,10 @@ button {
 }
 .status-dot {
   display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  margin-left: 5px;
-  vertical-align: middle;
-  background: gray; /* ডিফল্ট – অফলাইন */
+  width: 10px; height: 10px;
+  border-radius: 50%; margin-left: 5px;
+  background: gray; /* অফলাইন */
 }
-.status-dot.online { background: green; }
+.status-dot.online {
+  background: green; /* অনলাইন */
+}
