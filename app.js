@@ -21,16 +21,17 @@ window.onload = function () {
   if (savedUser) {
     currentUser = JSON.parse(savedUser);
     // Presence tracking
-const myStatusRef = db.ref('status/' + currentUser.phone);
-const connectedRef = db.ref('.info/connected');
-    
-connectedRef.on('value', snap => {
-  if (snap.val() === true) {
-    // যখন ব্রাউজার কানেক্টেড
-    myStatusRef.set({ online: true });
-    myStatusRef.onDisconnect().set({ online: false });
-  }
-});
+const myStatusRef    = db.ref('status/' + currentUser.phone);
+    const connectedRef   = db.ref('.info/connected');
+
+    connectedRef.on('value', snap => {
+      if (snap.val() === true) {
+        // ব্রাউজার “লিভ” এ গেলে
+        myStatusRef.set({ online: true });
+        // পেজ ক্লোজ/রিফ্রেশ/নেটওয়ার্ক অফ এ
+        myStatusRef.onDisconnect().set({ online: false });
+      }
+    });
     document.getElementById('loginPage').classList.remove('active');
     document.getElementById('chatPage').classList.add('active');
     loadFriendList();
