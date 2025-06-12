@@ -248,6 +248,19 @@ async function setupCall(userId, peerId) {
 
   localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
   peerConnection = new RTCPeerConnection(servers);
+  const callerCandidatesRef = db.ref('calls/' + userId + '/callerCandidates');
+  peerConnection.onicecandidate = event => {
+    if (event.candidate) {
+      callerCandidatesRef.push(event.candidate.toJSON());
+    }
+  };
+
+  // 🔹 **দূরবর্তী ICE candidate গ্রহণ**  
+  const calleeCandidatesRef = db.ref('calls/' + userId + '/calleeCandidates');
+  calleeCandidatesRef.on('child_added', snap => {
+    const candidate = new RTCIceCandidate(snap.val());
+    peerConnection.addIceCandidate(candidate);
+  });
   localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
   peerConnection.ontrack = e => document.getElementById('remoteAudio').srcObject = e.streams[0];
 
