@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const userId = currentUser.phone;
     const peerId = chatId.split('_').find(p => p !== userId);
-    setupCall(userId, peerId)};
+    setupCall(userId, peerId);};
     document.getElementById('photoInput').addEventListener('change', async (e) => {
   const file = e.target.files[0];
   if (!file) return;
