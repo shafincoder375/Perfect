@@ -117,3 +117,50 @@ button {
 .status-dot.online {
   background: green; /* অনলাইন */
 }
+/* Top-বাটনগুলোতে স্পেস দিতে */
+.top-btns button {
+  margin-right: 8px;
+}
+
+/* Caller/Receiver/In-Call UI সেকশনগুলো একটু কেন্দ্রভিত্তিক কার্ডের মতো দেখাতে */
+#caller-ui,
+#receiver-ui,
+#in-call-ui {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffffff;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+/* UI এর সব বাটনের স্পেস আর হোভার ইফেক্ট */
+#caller-ui button,
+#receiver-ui button,
+#in-call-ui button {
+  margin: 0.5rem 0;
+  width: 100%;
+  max-width: 200px;
+}
+#caller-ui button:hover,
+#receiver-ui button:hover,
+#in-call-ui button:hover {
+  opacity: 0.9;
+}
+
+/* Remote audio element একটু ভিজিবল রাখতে */
+#in-call-ui audio {
+  margin: 0.5rem 0;
+  width: 100%;
+}
+
+/* Backdrop (ঐচ্ছিক): UI ফোকাসের জন্য হালকা গ্লে-আউট */
+.call-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.3);
+  z-index: 999;
+    }
