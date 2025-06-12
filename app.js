@@ -232,8 +232,11 @@ function closeModal() {
   deleteSnapshot  = null;
 }
 function confirmDelete(option) {
-  if (option === 'everyone' && deleteSnapshot) snapshot.ref.remove();
-  else if (option === 'me' && messageToDelete) messageToDelete.remove();
+  if (option === 'everyone' && deleteSnapshot) {
+    deleteSnapshot.ref.remove(); // ✅ ঠিক করা হয়েছে
+  } else if (option === 'me' && messageToDelete) {
+    messageToDelete.remove();
+  }
   closeModal();
 }
 
