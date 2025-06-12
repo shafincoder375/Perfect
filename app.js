@@ -35,7 +35,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const userId = currentUser.phone;
     const peerId = chatId.split('_').find(p => p !== userId);
     setupCall(userId, peerId);
-  };
+    document.getElementById('photoInput').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const storageRef = firebase.storage().ref();
+  const imageRef = storageRef.child(`images/${Date.now()}_${file.name}`);
+  await imageRef.put(file);
+
+  const imageUrl = await imageRef.getDownloadURL();
+
+  const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  db.ref("chats/" + chatId).push({
+    text: `<img src="${imageUrl}" style="max-width:200px; border-radius:8px;" />`,
+    time: timestamp,
+    sender: currentUser.name,
+    isImage: true
+  });
 });
 
 // ──────────────────────────────────────────────────────────────
