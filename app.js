@@ -405,3 +405,17 @@ function resetCallUI() {
   document.getElementById('in-call-ui').style.display  = 'none';
   document.getElementById('chatPage').classList.add('active');
 }
+// … তোমার সব ফাংশন শেষ …
+
+  // -------------------------------
+  // ইমেজ প্রিভিউ টগলিং স্ক্রিপ্ট
+  // -------------------------------
+  document.addEventListener('click', function (e) {
+    if (e.target.tagName === 'IMG' && e.target.closest('.message')) {
+      e.target.classList.toggle('preview');
+    } else {
+      // প্রিভিউ অবস্থার বাইরে ক্লিক করলে সব ইমেজ থেকে ক্লাস রিমুভ
+      const allPreviews = document.querySelectorAll('.message img.preview');
+      allPreviews.forEach(img => img.classList.remove('preview'));
+    }
+  });
