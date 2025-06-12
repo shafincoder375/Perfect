@@ -315,9 +315,29 @@ function startInCall(selfId, peerId) {
 
 function hangUp() {
   console.log("Hang up clicked");
-  peerConnection?.close();
+
+  // ১) পিয়ার কানেকশন ছাড়াও লোকাল স্ট্রিম বন্ধ করা
+  if (peerConnection) {
+    peerConnection.getSenders().forEach(sender => {
+      if (sender.track) sender.track.stop();
+    });
+    peerConnection.close();
+  }
+  if (localStream) {
+    localStream.getTracks().forEach(track => track.stop());
+  }
+
+  // ২) অডিও এলিমেন্ট রিসেট
+  const audioEl = document.getElementById('remoteAudio');
+  if (audioEl) audioEl.srcObject = null;
+
+  // ৩) UI রিসেট
   resetCallUI();
-  db.ref('calls/' + currentUser.phone).remove();
+
+  // ৪) ডাটাবেস থেকে কল রেকর্ড মুছে ফেলা
+  const callRef = db.ref('calls/' + currentUser.phone);
+  callRef.remove();
+  // event listener বন্ধ করা
   db.ref('calls/').off();
 }
 
