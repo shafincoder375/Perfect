@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>বাংলা কথা</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+</head>
+<body>
+  <header>বাংলা কথা</header>
+  <div id="loginPage" class="page active">
+    <input id="nameInput" type="text" placeholder="আপনার নাম লিখুন" />
+    <input id="phoneInput" type="text" placeholder="আপনার ফোন নাম্বার লিখুন" />
+    <button onclick="startApp()">Get Started</button>
+  </div>
+
+  <div id="chatPage" class="page">
+    <button id="backBtn" onclick="hideChatArea()" style="display:none; position:absolute; top:10px; left:10px;">⬅️</button>
+    <div class="top-btns">
+      <button onclick="toggleFriendForm()">➕</button>
+    </div>
+    <div id="friendForm" style="display:none;">
+      <input id="friendName" type="text" placeholder="বন্ধুর নাম" />
+      <input id="friendPhone" type="text" placeholder="বন্ধুর ফোন নাম্বার" />
+      <button onclick="connectFriend()">Connect</button>
+    </div>
+
+    <div id="friendList"></div>
+    <div id="messages" style="display:none;"></div>
+    <footer style="display:none;">
+      <input id="textInput" type="text" placeholder="মেসেজ লিখুন বা বলুন..." />
+      <button onclick="sendMessage()">✉️</button>
+      <button onclick="startVoiceInput()">🎤</button>
+    </footer>
+  </div>
+
+  <div id="deleteModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; padding:20px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.3); z-index:999;">
+    <p>মেসেজ ডিলিট করতে চান?</p>
+    <button onclick="confirmDelete('everyone')">সবার থেকে মুছুন</button>
+    <button onclick="confirmDelete('me')">শুধু আমার থেকে</button>
+    <button onclick="closeModal()">❌ বাতিল</button>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
