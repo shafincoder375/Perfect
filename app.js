@@ -172,8 +172,7 @@ function loadChat() {
     const data = snapshot.val();
     const div = document.createElement("div");
     div.className = "message";
-    div.textContent = `${data.sender}: ${data.text}`;
-    div.innerHTML += `<div class="timestamp">${data.time}</div>`;
+    div.innerHTML = `${data.sender}: ${data.text}<div class="timestamp">${data.time}</div>`;
 
     div.oncontextmenu = e => {
       e.preventDefault();
