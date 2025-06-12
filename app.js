@@ -356,6 +356,10 @@ function hangUp() {
     });
     peerConnection.close();
   }
+  // ✅ UI গুলো সাথে সাথেই hide করে ফেলি
+  document.getElementById('in-call-ui').style.display = 'none';
+  document.getElementById('caller-ui').style.display = 'none';
+  document.getElementById('receiver-ui').style.display = 'none';
   if (localStream) {
     localStream.getTracks().forEach(track => track.stop());
   }
