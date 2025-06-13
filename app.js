@@ -26,7 +26,9 @@ let localStream, peerConnection;
 const servers = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] };
 
 // “📞” Audio Call Trigger
+
 document.addEventListener('DOMContentLoaded', () => {
+  // 📞 কল করার বাটন
   document.getElementById('start-audio-call').onclick = () => {
     if (!chatId) {
       alert("প্রথমে বন্ধুর সাথে চ্যাট খুলুন");
@@ -36,30 +38,39 @@ document.addEventListener('DOMContentLoaded', () => {
     const peerId = chatId.split('_').find(p => p !== userId);
     setupCall(userId, peerId);
   };
-   document.getElementById('photoBtn').onclick = () => {
-  document.getElementById('photoInput').click();
-};
+
+  // 🖼️ ছবি বাটনে ক্লিক করলে ফাইল ইনপুট ওপেন হবে
+  document.getElementById('photoBtn').onclick = () => {
+    document.getElementById('photoInput').click();
+  };
+
+  // 📷 ফাইল সিলেক্ট হলে সঙ্গে সঙ্গে Firebase-এ আপলোড এবং চ্যাটে পাঠানো হবে
   document.getElementById('photoInput').addEventListener('change', async (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
+    if (!chatId) {
+      alert("প্রথমে চ্যাট খুলুন");
+      return;
+    }
 
-  const storageRef = firebase.storage().ref();
-  const imageRef = storageRef.child(`images/${Date.now()}_${file.name}`);
-  await imageRef.put(file);
+    const file = e.target.files[0];
+    if (!file) return;
 
-  const imageUrl = await imageRef.getDownloadURL();
+    const storageRef = firebase.storage().ref();
+    const imageRef = storageRef.child(`images/${Date.now()}_${file.name}`);
+    await imageRef.put(file);
 
-  const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  db.ref("chats/" + chatId).push({
-    text: `<img src="${imageUrl}" style="max-width:200px; border-radius:8px;" />`,
-    time: timestamp,
-    sender: currentUser.name,
-    isImage: true
+    const imageUrl = await imageRef.getDownloadURL();
+
+    const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    db.ref("chats/" + chatId).push({
+      text: `<img src="${imageUrl}" style="max-width:200px; border-radius:8px;" />`,
+      time: timestamp,
+      sender: currentUser.name,
+      isImage: true
+    });
+
+    e.target.value = ''; // reset file input
   });
-      e.target.value = '';
-});
-});
-// ──────────────────────────────────────────────────────────────
+});─────────────────────────────────
 // ৩) On Load: Restore Login & Start Presence Tracking
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 window.onload = function () {
