@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const peerId = chatId.split('_').find(p => p !== userId);
     setupCall(userId, peerId);
   };
-
+<button id="getStartedBtn">Get Started</button>
   // 🖼️ ছবি বাটনে ক্লিক করলে ফাইল ইনপুট ওপেন হবে
   document.getElementById('photoBtn').onclick = () => {
     document.getElementById('photoInput').click();
